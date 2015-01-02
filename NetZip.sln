@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetZip", "NetZip.csproj", "{FE89B1E9-88F9-4398-8AA4-6930A134DC1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE89B1E9-88F9-4398-8AA4-6930A134DC1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE89B1E9-88F9-4398-8AA4-6930A134DC1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE89B1E9-88F9-4398-8AA4-6930A134DC1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE89B1E9-88F9-4398-8AA4-6930A134DC1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
