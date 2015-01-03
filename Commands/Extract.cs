@@ -5,7 +5,7 @@ using System.IO.Compression;
 
 namespace NetZip.Commands
 {
-    class Extract
+    class Extract : ICommand
     {
         ZipArchive archive;
         string extractDir;
@@ -25,8 +25,9 @@ namespace NetZip.Commands
             CheckForAvailability();
             
             archive.ExtractToDirectory(extractDir);
-            Console.WriteLine("Successfully extracted {0} files from the archive to \"{1}\". Size: {2} bytes",
-                archive.Entries.Count, extractDir, GetDirectorySize());
+            Console.WriteLine("Successfully extracted {0} files from the archive to \"{1}\".",
+                archive.Entries.Count, extractDir);
+            Console.WriteLine("Size: {0} bytes", GetDirectorySize());
 
             archive.Dispose();
         }

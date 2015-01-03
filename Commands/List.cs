@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NetZip.Commands
 {
-    class List
+    class List : ICommand
     {
         ZipArchive archive;
         List<string> formats = new List<string> { "{0}",

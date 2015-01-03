@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NetZip.Commands
 {
-    class Create
+    class Create : ICommand
     {
         string sourcePath;
         string archiveName;
@@ -36,7 +36,7 @@ namespace NetZip.Commands
         {
             if (File.Exists(archiveName))
             {
-                Console.Write("A file named {0} already exists, overwrite ? (y/n) ", archiveName);
+                Console.Write("A file named {0} already exists, overwrite ? (y/n) ", archiveName); // archiveName doesnt print
                 if (Console.ReadLine()[0] == 'y')
                     File.Delete(archiveName);
                 else
