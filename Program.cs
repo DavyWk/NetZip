@@ -19,11 +19,13 @@ namespace NetZip
                 Exit();
             }
 
-            if (!System.IO.File.Exists(args[0]))
-            {
-                Console.WriteLine("File does not exist !");
-                Exit();
-            }
+            //TODO: Need exception for Create
+            // check in each class ?
+            //if (!System.IO.File.Exists(args[0]) &&)
+            //{
+            //    Console.WriteLine("File does not exist !");
+            //    Exit();
+            //}
 
             new Parser(args).Parse();
 

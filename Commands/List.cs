@@ -38,7 +38,7 @@ namespace NetZip.Commands
 
             foreach(ZipArchiveEntry entry in archive.Entries)
             {
-                Console.WriteLine(format, entry.Name, formatIndex == 2 ? entry.CompressedLength : entry.Length, entry.CompressedLength);
+                Console.WriteLine(format, entry.FullName, formatIndex == 2 ? entry.CompressedLength : entry.Length, entry.CompressedLength);
             }
 
             archive.Dispose();

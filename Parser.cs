@@ -29,6 +29,8 @@ namespace NetZip
                 new Add(args).Execute();
             else if (mainCommand == "del" || mainCommand == "delete" || mainCommand == "-d")
                 new Delete(args).Execute();
+            else if (mainCommand == "create")
+                new Create(args).Execute();
 
             return true;
         }

@@ -2,8 +2,10 @@ Get file in main args[0]
 [1]: Main command
 [2,3 ...]: Subcommands
 
--l : List all files
+-l list : List all files
 	-s : List file sizes
 	-cs: List compressed file sizes
--e [folderName]: Extract to folder [folderName] (if used: Unzzipped(x)))
--a [fileName]: Add a file to the archive
+-e extract [folderName]: Extract to folder [folderName] (if used: Unzzipped(x)))
+-a add [fileName]: Add a file to the archive
+-d delete [entryName]: Delete [entryName] from archive
+-c create [fileToAdd]: Create a new entry

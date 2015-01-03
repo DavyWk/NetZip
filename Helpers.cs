@@ -29,5 +29,13 @@ namespace NetZip
                 ret += entry.CompressedLength;
             return ret;
         }
+
+        public static long GetDecompressedSize(this ZipArchive archive)
+        {
+            long ret = 0;
+            foreach (var entry in archive.Entries)
+                ret += entry.Length;
+            return ret;
+        }
     }
 }
