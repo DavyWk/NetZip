@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Compression;
 
 
 namespace NetZip
@@ -19,6 +20,14 @@ namespace NetZip
                 if (array.Contains(s))
                     return true;
             return false;
+        }
+
+        public static long GetSize(this ZipArchive archive)
+        {
+            long ret = 0;
+            foreach (var entry in archive.Entries)
+                ret += entry.CompressedLength;
+            return ret;
         }
     }
 }
