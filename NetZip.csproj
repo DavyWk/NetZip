@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Add.cs" />
+    <Compile Include="Commands\Delete.cs" />
     <Compile Include="Commands\Extract.cs" />
     <Compile Include="Commands\List.cs" />
     <Compile Include="Helpers.cs" />
