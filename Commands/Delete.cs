@@ -5,30 +5,42 @@ using System.Collections.Generic;
 
 namespace NetZip.Commands
 {
-    class Delete
+    class Delete : ICommand
     {
         ZipArchive archive;
         string entryName;
+        bool isDirectory = false;
 
         // netzip delete test.zip file.txt
-        public Delete(string[] args) // need to support directories
+        public Delete(string[] args)
         {
             entryName = args[2];
 
             archive = ZipFile.Open(args[0], ZipArchiveMode.Update);
 
+            isDirectory = !entryName.Contains("."); // not reliable
         }
 
         public void Execute()
         {
             long originalSize = archive.GetSize();
             var list = new List<ZipArchiveEntry>();
+
+            foreach (var entry in archive.Entries)
+            {
+                if (isDirectory)
+                {
+                    if (entry.FullName.Contains(entryName))
+                        list.Add(entry);
+                }
+                else
+                {
+                    if (entry.Name == entryName)
+                        list.Add(entry);
+                }
+            }
             
-            foreach(var entry in archive.Entries)
-                if (entry.Name == entryName)
-                    list.Add(entry);
-            
-            if(list.Count > 1)
+            if(list.Count > 1 && !isDirectory)
             {
                 Console.Write("The archive contains more than one entry named \"{0}\", delete all of them or just the first one ? (y/n) ", entryName);
                 bool deleteAll = Console.ReadLine()[0] == 'y';

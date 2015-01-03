@@ -49,6 +49,7 @@
     <Compile Include="Commands\Add.cs" />
     <Compile Include="Commands\Delete.cs" />
     <Compile Include="Commands\Extract.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\List.cs" />
     <Compile Include="Commands\Create.cs" />
     <Compile Include="Helpers.cs" />

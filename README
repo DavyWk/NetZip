@@ -7,5 +7,8 @@ Get file in main args[0]
 	-cs: List compressed file sizes
 -e extract [folderName]: Extract to folder [folderName] (if used: Unzzipped(x)))
 -a add [fileName]: Add a file to the archive
+	-d: Adds a directory
 -d delete [entryName]: Delete [entryName] from archive
+	-d: Deletes a directory
 -c create [fileToAdd]: Create a new entry
+	-d: Creates archive with a directory
