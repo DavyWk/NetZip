@@ -5,4 +5,5 @@ Get file in main args[0]
 -l : List all files
 	-s : List file sizes
 	-cs: List compressed file sizes
--e [folderName]: Extract to folder [folderName]
+-e [folderName]: Extract to folder [folderName] (if used: Unzzipped(x)))
+-a [fileName]: Add a file to the archive

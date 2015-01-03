@@ -23,10 +23,12 @@ namespace NetZip.Commands
         public void Execute()
         {
             CheckForAvailability();
-
+            
             archive.ExtractToDirectory(extractDir);
             Console.WriteLine("Successfully extracted {0} files from the archive to \"{1}\". Size: {2} bytes",
                 archive.Entries.Count, extractDir, GetDirectorySize());
+
+            archive.Dispose();
         }
 
         private long GetDirectorySize()
