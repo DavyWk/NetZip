@@ -10,11 +10,15 @@ namespace NetZip.Commands
         string filePath;
         string archiveName;
 
-        public Add(string[] args)
+        public Add(string[] args) // need to support directories too
         {
             archiveName = args[0];
-            archive = ZipFile.Open(archiveName, ZipArchiveMode.Update);
             filePath = args[2];
+
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException(filePath);
+
+            archive = ZipFile.Open(archiveName, ZipArchiveMode.Update);
         }
 
         public void Execute()

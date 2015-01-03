@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
 
@@ -15,6 +16,9 @@ namespace NetZip.Commands
 
         public List(string[] args)
         {
+            if (!File.Exists(args[0]))
+                throw new FileNotFoundException(args[0]);
+
             archive = ZipFile.OpenRead(args[0]);
             Parse(args);
         }

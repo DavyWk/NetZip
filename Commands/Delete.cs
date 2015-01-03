@@ -11,10 +11,12 @@ namespace NetZip.Commands
         string entryName;
 
         // netzip delete test.zip file.txt
-        public Delete(string[] args)
+        public Delete(string[] args) // need to support directories
         {
-            archive = ZipFile.Open(args[0], ZipArchiveMode.Update);
             entryName = args[2];
+
+            archive = ZipFile.Open(args[0], ZipArchiveMode.Update);
+
         }
 
         public void Execute()
@@ -34,14 +36,20 @@ namespace NetZip.Commands
                 if (!deleteAll)
                     list.RemoveRange(1, list.Count - 1); // delete all but the first one from the list
             }
+            else if(list.Count == 0)
+            {
+                Console.WriteLine("The archive does not contain any entry named \"{0}\"", entryName);
+                archive.Dispose();
+                return;
+            }
 
            foreach(var entry in list)
-           {
                entry.Delete();
-           }
+           
            
            Console.WriteLine("Deleted {0} entries of \"{1}\" from the archive", list.Count, entryName);
            Console.WriteLine("Size went from {0} bytes to {1} bytes", originalSize, archive.GetSize());
+
            archive.Dispose();
         }
 

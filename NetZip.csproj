@@ -50,7 +50,7 @@
     <Compile Include="Commands\Delete.cs" />
     <Compile Include="Commands\Extract.cs" />
     <Compile Include="Commands\List.cs" />
-    <Compile Include="Create.cs" />
+    <Compile Include="Commands\Create.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />

@@ -19,15 +19,23 @@ namespace NetZip
                 Exit();
             }
 
-            //TODO: Need exception for Create
-            // check in each class ?
-            //if (!System.IO.File.Exists(args[0]) &&)
-            //{
-            //    Console.WriteLine("File does not exist !");
-            //    Exit();
-            //}
+            try
+            {
+                new Parser(args).Parse();
+            }
+            catch(Exception ex)
+            {
+                if (ex is System.IO.FileNotFoundException)
+                    Console.WriteLine("File not found: {0}", (ex as System.IO.FileNotFoundException).FileName);
+                else if (ex is System.IO.DirectoryNotFoundException)
+                    Console.WriteLine("Directory not found: {0}", ex.Message);
+                else if (ex is System.IO.IOException)
+                    Console.WriteLine(ex.Message);
+                else
+                    throw;
 
-            new Parser(args).Parse();
+                Exit();
+            }
 
             Pause();
         }

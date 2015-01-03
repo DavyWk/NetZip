@@ -3,11 +3,10 @@ using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
 
-namespace NetZip
+namespace NetZip.Commands
 {
     class Create
     {
-        ZipArchive archive;
         string sourcePath;
         string archiveName;
 
@@ -16,11 +15,38 @@ namespace NetZip
         {
             archiveName = args[0];
             sourcePath = args[2];
-            archive = ZipFile.Open(archiveName, ZipArchiveMode.Create);
+
+            if (!archiveName.EndsWith(".zip"))
+               archiveName = string.Concat(archiveName, ".zip");
+
+            if(sourcePath.IndexOf(".") == -1)
+            { // is a directory
+                if (!Directory.Exists(sourcePath))
+                    throw new DirectoryNotFoundException(sourcePath);
+            }
+            else
+            { // is a file
+                if (!File.Exists(sourcePath))
+                    throw new DirectoryNotFoundException(sourcePath);
+            }
+
         }
 
         public void Execute()
         {
+            if (File.Exists(archiveName))
+            {
+                Console.Write("A file named {0} already exists, overwrite ? (y/n) ", archiveName);
+                if (Console.ReadLine()[0] == 'y')
+                    File.Delete(archiveName);
+                else
+                {
+                    Console.WriteLine("Did not create archive");
+                    return;
+                }
+            }
+
+            ZipArchive archive = ZipFile.Open(archiveName, ZipArchiveMode.Create);
             var files = new List<string>();
             
             if (!sourcePath.Contains("."))
