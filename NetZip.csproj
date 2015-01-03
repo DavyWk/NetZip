@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Extract.cs" />
     <Compile Include="Commands\List.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Parser.cs" />

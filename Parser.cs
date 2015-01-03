@@ -23,6 +23,8 @@ namespace NetZip
 
             if (mainCommand == "list" || mainCommand == "-l")
                 new List(args).Execute();
+            else if (mainCommand == "extract" || mainCommand == "-e")
+                new Extract(args).Execute();
 
             return true;
         }
