@@ -1,0 +1,8 @@
+Get file in main args[0]
+[1]: Main command
+[2,3 ...]: Subcommands
+
+-l : List all files
+	-s : List file sizes
+	-cs: List compressed file sizes
+-e [folderName]: Extract to folder [folderName]
