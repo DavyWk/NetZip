@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
@@ -18,7 +19,12 @@ namespace NetZip.Commands
 
             archive = ZipFile.Open(args[0], ZipArchiveMode.Update);
 
-            isDirectory = !entryName.Contains("."); // not reliable
+            if (args[1] == "-d")
+                isDirectory = (from a in args where a == "-d" select a).Count() > 1;
+            else
+            {
+                isDirectory = args.Contains("-d");
+            }
         }
 
         public void Execute()
@@ -39,8 +45,8 @@ namespace NetZip.Commands
                         list.Add(entry);
                 }
             }
-            
-            if(list.Count > 1 && !isDirectory)
+
+            if (list.Count > 1 && !isDirectory)
             {
                 Console.Write("The archive contains more than one entry named \"{0}\", delete all of them or just the first one ? (y/n) ", entryName);
                 bool deleteAll = Console.ReadLine()[0] == 'y';
@@ -48,23 +54,31 @@ namespace NetZip.Commands
                 if (!deleteAll)
                     list.RemoveRange(1, list.Count - 1); // delete all but the first one from the list
             }
-            else if(list.Count == 0)
+            else if (list.Count == 0)
             {
-                Console.WriteLine("The archive does not contain any entry named \"{0}\"", entryName);
+                if (!isDirectory)
+                    Console.WriteLine("The archive does not contain any entry named \"{0}\"", entryName);
+                else
+                    Console.WriteLine("The archive does not contain the folder \"{0}\"", entryName);
+                Console.WriteLine("Make sure to provide the full path if it is a subfolder");
                 archive.Dispose();
                 return;
             }
 
-           foreach(var entry in list)
-               entry.Delete();
-           
-           
-           Console.WriteLine("Deleted {0} entries of \"{1}\" from the archive", list.Count, entryName);
-           Console.WriteLine("Size went from {0} bytes to {1} bytes", originalSize, archive.GetSize());
+            foreach (var entry in list)
+                entry.Delete();
 
-           archive.Dispose();
+
+            if (!isDirectory)
+                Console.WriteLine("Deleted {0} entries of \"{1}\" from the archive", list.Count, entryName);
+            else
+                Console.WriteLine("Delete {0} files from the folder {1} in the archive", list.Count, entryName);
+
+            Console.WriteLine("Size went from {0} bytes to {1} bytes", originalSize, archive.GetSize());
+
+            archive.Dispose();
         }
 
-        
+
     }
 }

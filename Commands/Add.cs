@@ -7,30 +7,32 @@ namespace NetZip.Commands
     class Add
     {
         ZipArchive archive;
-        string filePath;
+        string path;
         string archiveName;
+        bool isDirectory;
 
         public Add(string[] args) // need to support directories too
         {
             archiveName = args[0];
-            filePath = args[2];
+            path = args[2];
+            isDirectory = args.Contains("-d");
 
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException(filePath);
+            if (!File.Exists(path))
+                throw new FileNotFoundException(path);
 
             archive = ZipFile.Open(archiveName, ZipArchiveMode.Update);
         }
 
         public void Execute()
         {
-            string fileName = Path.GetFileName(filePath);
+            string fileName = Path.GetFileName(path);
             if(!File.Exists(fileName))
             {
-                Console.WriteLine("The file \"{0}\" does not exist", filePath);
+                Console.WriteLine("The file \"{0}\" does not exist", path);
                 return;
             }
 
-            archive.CreateEntryFromFile(filePath, fileName);
+            archive.CreateEntryFromFile(path, fileName);
             archive.Dispose();
             
             using(ZipArchive newArchive = ZipFile.OpenRead(archiveName))

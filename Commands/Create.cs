@@ -9,8 +9,8 @@ namespace NetZip.Commands
     {
         string sourcePath;
         string archiveName;
+        bool isDirectory;
 
-        // args[2] can be a file or a directory
         public Create(string[] args)
         {
             archiveName = args[0];
@@ -19,13 +19,15 @@ namespace NetZip.Commands
             if (!archiveName.EndsWith(".zip"))
                archiveName = string.Concat(archiveName, ".zip");
 
-            if(sourcePath.IndexOf(".") == -1)
-            { // is a directory
+            isDirectory = args.Contains("-d");
+
+            if(isDirectory)
+            { 
                 if (!Directory.Exists(sourcePath))
                     throw new DirectoryNotFoundException(sourcePath);
             }
             else
-            { // is a file
+            { 
                 if (!File.Exists(sourcePath))
                     throw new DirectoryNotFoundException(sourcePath);
             }
@@ -36,7 +38,7 @@ namespace NetZip.Commands
         {
             if (File.Exists(archiveName))
             {
-                Console.Write("A file named {0} already exists, overwrite ? (y/n) ", archiveName); // archiveName doesnt print
+                Console.Write("A file named {0} already exists, overwrite ? (y/n) ", archiveName);
                 if (Console.ReadLine()[0] == 'y')
                     File.Delete(archiveName);
                 else
@@ -47,22 +49,20 @@ namespace NetZip.Commands
             }
 
             ZipArchive archive = ZipFile.Open(archiveName, ZipArchiveMode.Create);
-            var files = new List<string>();
+            var filePaths = new List<string>();
             
-            if (!sourcePath.Contains("."))
+            if (isDirectory)
             {
-                files.AddRange(GetFilePaths(sourcePath));
+                filePaths.AddRange(GetFilePaths(sourcePath));
             }
             else
-                files.Add(sourcePath);
+                filePaths.Add(sourcePath);
 
-            foreach (var f in files)
+            foreach (var path in filePaths)
             {
-                string entryName = f;
-                if(!sourcePath.Contains("."))
-                    f.Substring(sourcePath.Length);
-                archive.CreateEntryFromFile(f, entryName);
+                archive.CreateEntryFromFile(path, path);
             }
+
             archive.Dispose();
 
             using (var newArchive = ZipFile.OpenRead(archiveName))
