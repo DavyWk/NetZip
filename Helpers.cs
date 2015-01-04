@@ -22,6 +22,11 @@ namespace NetZip
             return false;
         }
 
+        public static bool Equals(this string str, string[] array)
+        {
+            return array.Contains(str);
+        }
+
         public static long GetSize(this ZipArchive archive)
         {
             long ret = 0;

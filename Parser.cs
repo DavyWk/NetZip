@@ -8,6 +8,11 @@ namespace NetZip
 {
     class Parser
     {
+        private static string[] cList = new string[] { "list", "-l" };
+        private static string[] cExtract = new string[] { "extract", "-e" };
+        private static string[] cAdd = new string[] { "add", "-a" };
+        private static string[] cDelete = new string[] { "delete", "del", "-d" };
+        private static string[] cCreate = new string[] { "create", "-c" };
         string[] args;
 
         public Parser(string[] arguments)
@@ -21,15 +26,15 @@ namespace NetZip
                 return false;
             var mainCommand = args[1];
 
-            if (mainCommand == "list" || mainCommand == "-l")
+            if (mainCommand.Equals(cList))
                 new List(args).Execute();
-            else if (mainCommand == "extract" || mainCommand == "-e")
+            else if (mainCommand.Equals(cExtract))
                 new Extract(args).Execute();
-            else if (mainCommand == "add" || mainCommand == "-a")
+            else if (mainCommand.Equals(cAdd))
                 new Add(args).Execute();
-            else if (mainCommand == "del" || mainCommand == "delete" || mainCommand == "-d")
+            else if (mainCommand.Equals(cDelete))
                 new Delete(args).Execute();
-            else if (mainCommand == "create")
+            else if (mainCommand.Equals(cCreate))
                 new Create(args).Execute();
 
             return true;
