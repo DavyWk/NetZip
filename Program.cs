@@ -13,15 +13,9 @@ namespace NetZip
             Console.Title = "NetZip";
             Console.WriteLine("Made by DavyWk: https://github.com/DavyWk/NetZip");
 
-            if (args.Length < 2)
-            {
-                Console.WriteLine("Usage: netzip [commands]");
-                Exit();
-            }
-
             try
             {
-                new Parser(args).Parse();
+                new Parser(args, standAlone).Parse();
             }
             catch(Exception ex)
             {
@@ -37,7 +31,9 @@ namespace NetZip
                 Exit();
             }
 
-            Pause();
+            Console.WriteLine("Thanks for using NetZip");
+            System.Threading.Tasks.Task.Delay(3000).ContinueWith(_ => { Environment.Exit(0); });
+            Console.ReadLine();
         }
 
         static void Exit()

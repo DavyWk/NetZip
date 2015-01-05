@@ -11,7 +11,7 @@ namespace NetZip.Commands
         string archiveName;
         bool isDirectory;
 
-        public Add(string[] args) // need to support directories too
+        public Add(string[] args)
         {
             archiveName = args[0];
             path = args[2];

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO.Compression;
 using System.Collections.Generic;
 
 using NetZip.Commands;
@@ -13,29 +12,71 @@ namespace NetZip
         private static string[] cAdd = new string[] { "add", "-a" };
         private static string[] cDelete = new string[] { "delete", "del", "-d" };
         private static string[] cCreate = new string[] { "create", "-c" };
-        string[] args;
+        private static string[] cQuit = new string[] { "x", "quit" };
 
-        public Parser(string[] arguments)
+        string[] args;
+        bool standAlone;
+
+        public Parser(string[] arguments, bool isStandAlone)
         {
+            standAlone = isStandAlone;
             args = arguments;
         }
 
-        public bool Parse()
+        public void Parse()
         {
-            if (args.Contains(new string[] {"x", "exit"}))
-                return false;
-            var mainCommand = args[1];
+            if (args.Length == 0)
+            {
+                Console.WriteLine("\t\t\tNetZip- Ready for input");
+                
+                if(!GetArgs(Console.ReadLine().Split()))
+                    return;
+            }
 
-            if (mainCommand.Equals(cList))
-                new List(args).Execute();
-            else if (mainCommand.Equals(cExtract))
-                new Extract(args).Execute();
-            else if (mainCommand.Equals(cAdd))
-                new Add(args).Execute();
-            else if (mainCommand.Equals(cDelete))
-                new Delete(args).Execute();
-            else if (mainCommand.Equals(cCreate))
-                new Create(args).Execute();
+            var mainCommand = string.Empty;
+
+            do
+            {
+                Console.WriteLine("\tOperating on file: {0}", args[0]);
+                mainCommand = args[1];
+
+                if (mainCommand.Equal(cList))
+                    new List(args).Execute();
+                else if (mainCommand.Equal(cExtract))
+                    new Extract(args).Execute();
+                else if (mainCommand.Equal(cAdd))
+                    new Add(args).Execute();
+                else if (mainCommand.Equal(cDelete))
+                    new Delete(args).Execute();
+                else if (mainCommand.Equal(cCreate))
+                    new Create(args).Execute();
+                else
+                    Console.WriteLine("Unknown command: {0}", mainCommand);
+
+                if (!standAlone)
+                    break;
+
+                Console.WriteLine("\t\t\tNetZip- Ready for input");
+            } while (GetArgs(Console.ReadLine().Split(' ')));
+
+        }
+
+        private bool GetArgs(string[] source)
+        {
+            if (source.Contains(cQuit))
+                return false;
+
+            var argList = new List<string>(source);
+
+            if (!argList[0].EndsWith(".zip"))
+            {
+                var tempList = argList;
+                argList = new List<string>();
+                argList.Add(args[0]); // add old filename
+                argList.AddRange(tempList); // add the rest of the command
+            }
+
+            args = argList.ToArray();
 
             return true;
         }

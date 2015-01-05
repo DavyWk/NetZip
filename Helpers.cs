@@ -22,7 +22,7 @@ namespace NetZip
             return false;
         }
 
-        public static bool Equals(this string str, string[] array)
+        public static bool Equal(this string str, string[] array)
         {
             return array.Contains(str);
         }
