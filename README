@@ -1,16 +1,20 @@
 Get file in main args[0]
 [1]: Main command
-[2,3 ...]: Subcommands
+[2,3 ...]: main command args
 
 -l list : List all files
 	-s : List file sizes
 	-cs: List compressed file sizes
--e extract [folderName]: Extract to folder [folderName] (if used: Unzzipped(x)))
+	
+-e extract [folderName]: Extract to folder [folderName] (if used: Unzipped(x)))
+
 -a add [fileName]: Add a file to the archive
 	-d: Adds a directory
+	
 -d delete [entryName]: Delete [entryName] from archive
 	-d: Deletes a directory
+	
 -c create [fileToAdd]: Create a new entry
 	-d: Creates archive with a directory
 	
-TODO:	Add help function
+h  help [command]: Displays help about the command

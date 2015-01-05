@@ -13,6 +13,7 @@ namespace NetZip
         private static string[] cDelete = new string[] { "delete", "del", "-d" };
         private static string[] cCreate = new string[] { "create", "-c" };
         private static string[] cQuit = new string[] { "x", "quit" };
+        private static string[] cHelp = new string[] { "h", "help" };
 
         string[] args;
         bool standAlone;
@@ -28,8 +29,8 @@ namespace NetZip
             if (args.Length == 0)
             {
                 Console.WriteLine("\t\t\tNetZip- Ready for input");
-                
-                if(!GetArgs(Console.ReadLine().Split()))
+
+                if (!GetArgs(Console.ReadLine().Split()))
                     return;
             }
 
@@ -37,8 +38,14 @@ namespace NetZip
 
             do
             {
-                Console.WriteLine("\tOperating on file: {0}", args[0]);
-                mainCommand = args[1];
+                if (!args[0].Equal(cHelp))
+                    Console.WriteLine("\tOperating on file: {0}", args[0]);
+                else
+                {
+                    args[0] = args[1];
+                    mainCommand = args[1] = "help";
+                }
+                mainCommand = args[1].ToLower();
 
                 if (mainCommand.Equal(cList))
                     new List(args).Execute();
@@ -50,6 +57,8 @@ namespace NetZip
                     new Delete(args).Execute();
                 else if (mainCommand.Equal(cCreate))
                     new Create(args).Execute();
+                else if (mainCommand.Equal(cHelp))
+                    new Help(args[0]).Execute();
                 else
                     Console.WriteLine("Unknown command: {0}", mainCommand);
 
@@ -68,7 +77,7 @@ namespace NetZip
 
             var argList = new List<string>(source);
 
-            if (!argList[0].EndsWith(".zip"))
+            if (!argList[0].EndsWith(".zip") && !source.Contains(cHelp))
             {
                 var tempList = argList;
                 argList = new List<string>();

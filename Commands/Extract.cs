@@ -45,7 +45,7 @@ namespace NetZip.Commands
             while(Directory.Exists(extractDir))
             {
                 Console.Write("The name \"{0}\" is already taken ... ", extractDir);
-                extractDir = string.Format("Unzziped({0})", i++);
+                extractDir = string.Format("Unzipped({0})", i++);
                 Console.WriteLine("Trying with the name \"{0}\"", extractDir);
             }
         }
