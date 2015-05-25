@@ -19,7 +19,7 @@ namespace NetZip.Commands
 
             archive = ZipFile.Open(args[0], ZipArchiveMode.Update);
 
-            if (args[1] == "-d")
+            if (args[1] == "-d") // in case the delete command was written as '-d'
                 isDirectory = (from a in args where a == "-d" select a).Count() > 1;
             else
             {
@@ -37,6 +37,8 @@ namespace NetZip.Commands
                 if (isDirectory)
                 {
                     if (entry.FullName.Contains(entryName))
+                        if(entry.FullName[entry.FullName.LastIndexOf(entryName) + entryName.Length] == '\\')
+                            // Crashes if file extension is the same as name
                         list.Add(entry);
                 }
                 else

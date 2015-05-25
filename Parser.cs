@@ -38,14 +38,30 @@ namespace NetZip
 
             do
             {
-                if (!args[0].Equal(cHelp))
-                    Console.WriteLine("\tOperating on file: {0}", args[0]);
-                else
+                if(!CheckForZIP(args)) // if no ZIP file is in the arguments
                 {
-                    args[0] = args[1];
-                    mainCommand = args[1] = "help";
+                    var temp = new List<string>();
+                    temp.Add(RequestFileName());
+                    temp.AddRange(args);
+
+                    args = temp.ToArray();
                 }
-                mainCommand = args[1].ToLower();
+
+
+                if (args[0].Equal(cHelp)) // help
+                {
+                    if (args.Length > 1)
+                        args[0] = args[1];
+
+                    mainCommand = "help";
+                }
+                else // any other command
+                {
+                    Console.WriteLine("\tOperating on file: {0}", args[0]);
+                    Console.WriteLine();
+                    mainCommand = args[1].ToLower();
+
+                }
 
                 if (mainCommand.Equal(cList))
                     new List(args).Execute();
@@ -65,6 +81,7 @@ namespace NetZip
                 if (!standAlone)
                     break;
 
+                Console.WriteLine();
                 Console.WriteLine("\t\t\tNetZip- Ready for input");
             } while (GetArgs(Console.ReadLine().Split(' ')));
 
@@ -77,17 +94,49 @@ namespace NetZip
 
             var argList = new List<string>(source);
 
-            if (!argList[0].EndsWith(".zip") && !source.Contains(cHelp))
+            if (!argList[0].EndsWith(".zip") && !source.Contains(cHelp)) // Re use previously specified file name
             {
+                if(args.Length == 0) // if no file name was ever specified
+                {
+                    args = new string[] { RequestFileName() };
+                }
+
                 var tempList = argList;
                 argList = new List<string>();
                 argList.Add(args[0]); // add old filename
-                argList.AddRange(tempList); // add the rest of the command
+                argList.AddRange(tempList); // the actual command
             }
 
             args = argList.ToArray();
 
             return true;
+        }
+
+        private bool CheckForZIP(string[] source)
+        {
+            // Checks for a ZIP file in the arguments
+
+            bool check = false;
+
+            foreach(string arg in source)
+            {
+                if(arg.EndsWith(".zip"))
+                {
+                    check = true;
+                    break;
+                }
+            }
+
+            return check;
+        }
+
+        private string RequestFileName()
+        {
+            Console.Write("Please specify a file name: ");
+            string fileName = Console.ReadLine();
+            Console.WriteLine();
+
+            return fileName;
         }
     }
 }

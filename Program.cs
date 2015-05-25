@@ -17,12 +17,12 @@ namespace NetZip
             {
                 new Parser(args, standAlone).Parse();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex is System.IO.FileNotFoundException)
-                    Console.WriteLine("File not found: {0}", (ex as System.IO.FileNotFoundException).FileName);
+                    Console.WriteLine((ex as System.IO.FileNotFoundException).Message);
                 else if (ex is System.IO.DirectoryNotFoundException)
-                    Console.WriteLine("Directory not found: {0}", ex.Message);
+                    Console.WriteLine((ex as System.IO.DirectoryNotFoundException).Message);
                 else if (ex is System.IO.IOException)
                     Console.WriteLine(ex.Message);
                 else
@@ -31,8 +31,9 @@ namespace NetZip
                 Exit();
             }
 
+            Console.WriteLine();
             Console.WriteLine("Thanks for using NetZip");
-            System.Threading.Tasks.Task.Delay(3000).ContinueWith(_ => { Environment.Exit(0); });
+            System.Threading.Tasks.Task.Delay(1000).ContinueWith(_ => { Environment.Exit(0); });
             Console.ReadLine();
         }
 

@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 namespace NetZip.Commands
 {
-    class Add
+    class Add // Can't add a whole directory
     {
         ZipArchive archive;
         string path;
@@ -26,11 +26,6 @@ namespace NetZip.Commands
         public void Execute()
         {
             string fileName = Path.GetFileName(path);
-            if(!File.Exists(fileName))
-            {
-                Console.WriteLine("The file \"{0}\" does not exist", path);
-                return;
-            }
 
             archive.CreateEntryFromFile(path, fileName);
             archive.Dispose();

@@ -45,6 +45,11 @@ namespace NetZip.Commands
                 Console.WriteLine(format, entry.FullName, formatIndex == 2 ? entry.CompressedLength : entry.Length, entry.CompressedLength);
             }
 
+            if(archive.Entries.Count == 0)
+            {
+                Console.WriteLine("The archive is empty");
+            }
+
             archive.Dispose();
         }
 

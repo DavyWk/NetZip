@@ -29,17 +29,14 @@ namespace NetZip.Commands
                 return hDelete;
             else if (cmd == "list")
                 return hList;
-            else if (string.IsNullOrEmpty(cmd))
+            else if (cmd == "help" || string.IsNullOrEmpty(cmd))
                 return hHelp;
             else
                 return string.Format("Unkown command: {0}", cmd);
         }
 
         private string hAdd = @"ADD (-a): Adds an item to a zip archive
-Usage: add test.zip test.txt 
-       add test.zip fileDIr -d
-Options:
-    -d: Adds a directory";
+Usage: add test.zip test.txt";
 
         private string hCreate = @"CREATE (-c): Creates a new archive
 Usage: create test.zip test.txt
