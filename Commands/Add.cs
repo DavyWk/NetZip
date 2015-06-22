@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 namespace NetZip.Commands
 {
-    class Add // Can't add a whole directory
+    class Add : ICommand// Can't add a whole directory
     {
         ZipArchive archive;
         string path;
